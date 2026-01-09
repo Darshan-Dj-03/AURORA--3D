@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rings 3D Collection</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+
+  <style>
+  /* ====== LUXURY THEME (your theme unchanged) ====== */
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: radial-gradient(circle at 50% 20%, #1a1a1f 0%, #0c0d11 70%, #08090c 100%);
+    color: #f2f2f2;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  #intro {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 20%, #1b1b1f 0%, #0d0e11 60%, #090a0c 90%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    animation: fadeOut 1.5s ease-in-out 3.5s forwards;
+    pointer-events: none;
+  }
+
+  #intro h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    margin: 0;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0.5s forwards;
+  }
+
+  .line {
+    width: 0;
+    height: 2px;
+    background: #c9a34f;
+    margin: 20px 0;
+    animation: expandLine 1s ease-out 1.5s forwards;
+  }
+
+  #intro p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 2.5s forwards;
+    color: #c7c7c7;
+  }
+
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes expandLine { to { width: 250px; } }
+  @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+  #brand-overlay {
+    position: absolute;
+    top: 40px; width: 100%;
+    text-align: center;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  #brand-overlay h2 {
+    margin: 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #f5f5f5;
+  }
+
+  #specs-panel {
+    position: absolute;
+    top: 0; right: 0;
+    width: 34%; height: 100%;
+    display: none;
+    z-index: 20;
+    background: rgba(18, 18, 22, 0.65);
+    backdrop-filter: blur(22px);
+    padding: 120px 55px 40px 50px;
+    box-sizing: border-box;
+    border-left: 1px solid rgba(255,255,255,0.05);
+  }
+
+  #footer-text {
+    position: absolute;
+    bottom: 40px; width: 100%;
+    text-align: center;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 1s;
+    z-index: 10;
+    color: #d2d2d2;
+  }
+
+  #footer-text.visible {
+    opacity: 1;
+  }
+
+  #close {
+    display: none;
+    position: absolute;
+    top: 35px; right: 50px;
+    background: transparent;
+    border: 1px solid #c9a34f;
+    color: #c9a34f;
+    border-radius: 30px;
+    padding: 10px 32px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    transition: 0.25s;
+    z-index: 30;
+  }
+
+  #close:hover {
+    background: #c9a34f;
+    color: #111;
+  }
+  </style>
+
+  <link rel="preload" href="models/gothic_men.glb" as="fetch" type="model/gltf-binary" crossorigin>
+  <link rel="preload" href="models/women_ring.glb" as="fetch" type="model/gltf-binary" crossorigin>
+  <link rel="preload" href="models/men_ring.glb" as="fetch" type="model/gltf-binary" crossorigin>
+</head>
+<body>
+
+<div id="intro">
+  <h1>RINGS 3D COLLECTION</h1>
+  <div class="line"></div>
+  <p>Rings That Speak Forever</p>
+</div>
+
+<div id="brand-overlay"><h2>AURORA</h2></div>
+
+<button id="close">Close</button>
+<div id="specs-panel"></div>
+<div id="footer-text">For Promises That Matter</div>
+
+<a-scene embedded renderer="colorManagement: true; exposure: 1.2; toneMapping:ACESFilmic; alpha: true" style="background: transparent;" cursor="rayOrigin: mouse" raycaster="objects: .ring">
+
+  <!-- CAMERA -->
+  <a-entity camera position="0 0 5" look-controls="enabled: false"></a-entity>
+
+  <!-- ** NEW LIGHTING (STUDIO)** -->
+  <a-light type="ambient" intensity="0.6"></a-light>
+  <a-light type="hemisphere" intensity="0.55" color="#ffffff" groundColor="#444444"></a-light>
+  <a-light type="directional" position="3 3 5" intensity="1.4"></a-light>
+  <a-light type="directional" position="-3 2 4" intensity="1.1"></a-light>
+  <a-light type="directional" position="0 3 -3" intensity="0.8"></a-light>
+  <a-light type="point" position="0 1 2" intensity="1.2"></a-light>
+
+  <!-- ** HDR ENVIRONMENT (Reflection for Metals)** -->
+  <a-sky src="https://threejs.org/examples/textures/equirectangular/royal_esplanade_1k.jpg" rotation="0 -90 0"></a-sky>
+
+  <!-- RINGS -->
+  <a-entity id="ring_gothic" class="ring" gltf-model="models/gothic_men.glb" position="-3.5 0 0" rotation="0 90 0"></a-entity>
+  <a-entity id="ring_women" class="ring" gltf-model="models/women_ring.glb" position="0 0 0" rotation="0 90 0"></a-entity>
+  <a-entity id="ring_men" class="ring" gltf-model="models/men_ring.glb" position="3.5 0 0" rotation="0 90 0"></a-entity>
+
+  <a-entity class="ring-label" position="-3.5 -1.2 0">
+    <a-text value="AURORA UMBRIS" align="center" width="4"></a-text>
+    <a-text value="Forged in shadowed metal." position="0 -0.3 0" align="center" width="2.5"></a-text>
+  </a-entity>
+
+  <a-entity class="ring-label" position="0 -1.2 0">
+    <a-text value="AURORA ROSALIA" align="center" width="4"></a-text>
+    <a-text value="Slim. Elegant. Effortless." position="0 -0.3 0" align="center" width="2.5"></a-text>
+  </a-entity>
+
+  <a-entity class="ring-label" position="3.5 -1.2 0">
+    <a-text value="AURORA ONYX" align="center" width="4"></a-text>
+    <a-text value="Minimal form. Maximum character." position="0 -0.3 0" align="center" width="2.5"></a-text>
+  </a-entity>
+
+</a-scene>
+<script src="components.js"></script>
+</body>
+</html>

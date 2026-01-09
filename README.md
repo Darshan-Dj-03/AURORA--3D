@@ -58,14 +58,6 @@ idle → focus → inspect → exit → idle
 
 ---
 
-## **Project Structure**
-📦 aurora
-┣ 📁 models/
-┃ ┣ gothic_men.glb
-┃ ┣ men_ring.glb
-┃ ┗ women_ring.glb
-┣ index.html
-┣ components.js
 
 
 ---
@@ -117,17 +109,14 @@ Rotation is continuous, non-snap, and does not rely on physics or tween librarie
 - Touch inertial rotation
 - Product carousel
 - Multi-model product line
-If you want, I can also:
 
-✔ Convert this README into a cleaner PDF for hiring submissions
-✔ Add diagrams for the state machine / layout
-✔ Add screenshots or rendered thumbnails
-✔ Add GIF demo section
-✔ Auto-generate GitHub Pages deploy ready version
-✔ Add a short description for the repo sidebar (GitHub topics + tags)
 
-Just tell me if you want any of those.
 
+
+## 🔗 Live Demo
+
+Experience the live interactive demo here:  
+👉 https://aurora-3-d.vercel.app/
 
 
 
